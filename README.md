@@ -27,9 +27,8 @@ npm run dev
 
 ### TODO
 
-1. 补全按钮图标
-2. 为左下角BREAKING NEWS添加滚动条（懒得做了）
-3. 完善相关细节
+1. 补充按钮图标
+2. 完善细节
 
 ## 许可证
 
@@ -40,8 +39,10 @@ MIT License
 ### 字体
 
 [Samigirian Serif](https://github.com/Siphercase/Samigirian)
-[SourceHanSansCN-VF](https://www.fonts.net.cn/font-39307199570.html)
-[方正准雅宋\_GBK](https://www.fonts.net.cn/font-32533345155.html)
+[思源黑体 CN VF](https://www.fonts.net.cn/font-39307199570.html)
+[方正准雅宋 GBK](https://www.fonts.net.cn/font-32533345155.html)
+[8BitOperator](https://www.1001freefonts.com/8-bit-operator.font)
+[Novecento Wide Normal](https://github.com/TimWangZi/The-font-of-Arknights/blob/master/font/Novecento-Wide-Normal-2.otf)
 
 ### svg图标
 
@@ -54,6 +55,6 @@ MIT License
 [图标\_合成玉.png](https://prts.wiki/w/文件:图标_合成玉.png)
 [图标\_源石.png](https://prts.wiki/w/文件:图标_源石.png)
 
-### 附带的助理立绘
+### 助理立绘
 
 本人使用[Tensor.Art](https://tusiart.com/)生成，不持有版权。

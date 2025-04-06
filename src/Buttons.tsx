@@ -3,13 +3,19 @@ import { Button } from "@headlessui/react";
 export function BaseButton({
   children,
   className = "",
+  onClick,
+  style = {},
 }: {
   children: React.ReactNode;
   className?: string;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  style?: React.CSSProperties;
 }) {
   return (
     <Button
       className={`flex justify-start overflow-hidden text-left backdrop-blur-xs after:absolute after:inset-0 after:transition-colors active:after:bg-black/20 ${className}`}
+      style={style}
+      onClick={onClick}
     >
       {children}
     </Button>
@@ -23,7 +29,7 @@ export function SmallButton({ title = "", subtitle = "" }) {
         <div className="mt-1 w-fit font-['FZZYS'] text-[3.5rem] text-[#b9b9b9ff]">
           {title}
         </div>
-        <div className="-mt-4 font-['AgeFonts001'] text-[2rem] font-bold text-[hsl(245,100%,60%)]">
+        <div className="-mt-4 font-['SamigirianSerif'] text-[2rem] font-bold text-[hsl(245,100%,60%)]">
           {subtitle}
         </div>
       </div>
@@ -38,7 +44,7 @@ export function StoreButton() {
         <div className="mt-2 w-fit font-['FZZYS'] text-[3rem] text-[#dddddd]">
           采购中心
         </div>
-        <div className="-mt-4 font-['AgeFonts001'] text-[2rem] font-bold text-[hsl(245,100%,80%)]">
+        <div className="-mt-4 font-['SamigirianSerif'] text-[2rem] font-bold text-[hsl(245,100%,80%)]">
           store
         </div>
       </div>
@@ -49,7 +55,7 @@ export function StoreButton() {
 export function RecruitButton({ title = "", subtitle = "" }) {
   return (
     <BaseButton className="flex h-22 w-53 flex-col items-center">
-      <div className="font-['AgeFonts001'] text-[2rem] font-bold text-[hsl(245,100%,80%)]">
+      <div className="font-['SamigirianSerif'] text-[2rem] font-bold text-[hsl(245,100%,80%)]">
         {title}
       </div>
       <div className="-mt-3 font-['FZZYS'] text-[2rem] text-[#dddddd]">
@@ -70,13 +76,39 @@ export function TerminalButton() {
       </div>
 
       <div className="ml-2 flex flex-col">
-        <div className="font-['AgeFonts001'] text-[6rem] font-bold text-[#4433ff]">
+        <div className="font-['SamigirianSerif'] text-[6rem] font-bold text-[#4433ff]">
           terminal
         </div>
         <div className="-mt-6 size-fit rounded-md bg-[#232323ff] px-2.5 pt-0.5 pb-1 text-[1.5rem] text-[#888888ff]">
           当前
         </div>
         <div className="size-fit text-[1.5rem] text-[#b9b9b9ff]">全部完成</div>
+      </div>
+    </BaseButton>
+  );
+}
+
+export function FriendsButton() {
+  return (
+    <BaseButton className="flex h-17 w-48 flex-col items-end bg-[#222222dd] pr-2">
+      <div className="font-['SamigirianSerif'] text-[1.5rem] font-bold text-[hsl(245,100%,65%)]">
+        friends
+      </div>
+      <div className="-mt-3 w-fit font-['FZZYS'] text-[2rem] text-[#ffffff]">
+        好友
+      </div>
+    </BaseButton>
+  );
+}
+
+export function ArchiveButton() {
+  return (
+    <BaseButton className="flex h-17 w-48 flex-col items-end bg-[#444444dd] pr-2">
+      <div className="font-['SamigirianSerif'] text-[1.5rem] font-bold text-[hsl(245,100%,65%)]">
+        archive
+      </div>
+      <div className="-mt-3 w-fit font-['FZZYS'] text-[2rem] text-[#ffffff]">
+        档案
       </div>
     </BaseButton>
   );

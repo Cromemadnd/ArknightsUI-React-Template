@@ -16,22 +16,36 @@
 }
 
 @font-face {
-  font-family: "AgeFonts001";
+  font-family: "SamigirianSerif";
   font-style: normal;
   font-weight: 400;
-  src: url("/SamigirianSerif-Regular.ttf");
+  src: url("/fonts/SamigirianSerif-Regular.ttf");
 }
 
 @font-face {
   font-family: "SourceHanSansCN-VF";
   font-style: normal;
   font-weight: 400;
-  src: url("/SourceHanSansCN-VF.ttf");
+  src: url("/fonts/SourceHanSansCN-VF.ttf");
 }
 
 @font-face {
   font-family: "FZZYS";
   font-style: normal;
   font-weight: 400;
-  src: url("/方正准雅宋_GBK.ttf");
+  src: url("/fonts/方正准雅宋_GBK.ttf");
+}
+
+@font-face {
+  font-family: "Novecento";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/Novecento-Wide-Normal-2.otf");
+}
+
+@font-face {
+  font-family: "EightBitOperator";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/8bitOperatorPlus8-Regular.ttf");
 }
