@@ -39,9 +39,13 @@ MIT License
 ### 字体
 
 [Samigirian Serif](https://github.com/Siphercase/Samigirian)
+
 [思源黑体 CN VF](https://www.fonts.net.cn/font-39307199570.html)
+
 [方正准雅宋 GBK](https://www.fonts.net.cn/font-32533345155.html)
+
 [8BitOperator](https://www.1001freefonts.com/8-bit-operator.font)
+
 [Novecento Wide Normal](https://github.com/TimWangZi/The-font-of-Arknights/blob/master/font/Novecento-Wide-Normal-2.otf)
 
 ### svg图标
@@ -49,11 +53,13 @@ MIT License
 左上角图标来源: [iconfont](https://www.iconfont.cn/)
 右侧的电池图标与招募图标为自制。
 
-### 龙门币、合成玉、源石图标（PRTS）
+### 龙门币、合成玉、源石图标，背景图片与BGM
 
-[图标\_龙门币.png](https://prts.wiki/w/文件:图标_龙门币.png)
-[图标\_合成玉.png](https://prts.wiki/w/文件:图标_合成玉.png)
-[图标\_源石.png](https://prts.wiki/w/文件:图标_源石.png)
+均来自[PRTS](https://prts.wiki)。
+
+### 按键点击音效
+
+来自游戏录制。
 
 ### 助理立绘
 

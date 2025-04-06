@@ -109,7 +109,7 @@ export function NewsCol() {
 
   return (
     <div
-      className="pointer-events-none h-34 w-84 overflow-visible"
+      className="h-34 w-84 overflow-visible"
       draggable={true}
       onDragStart={handleDragStart}
       onDrag={handleDragMove}
@@ -125,7 +125,7 @@ export function NewsCol() {
             // 此处注意translateX以向左为正
             transform: `translateX(${Math.max(Math.min(1.2 * (dragEndX - dragStartX) - index * 360, 60), -banners.length * 360 + 300)}px)`,
           }}
-          className="pointer-events-auto gap-6 transition-transform duration-250 ease-out"
+          className="gap-6 transition-transform duration-250 ease-out"
           onClick={() => console.log(index)}
         >
           {banners.map((banner, i) => (
@@ -134,7 +134,7 @@ export function NewsCol() {
         </BaseButton>
       </div>
 
-      {banners.map((banner, i) => (
+      {banners.map((_, i) => (
         <hr
           style={{
             // 设置线长:间隔为10:1

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   ArchiveButton,
   BaseButton,
@@ -43,6 +43,9 @@ function App() {
     };
   }, []);
 
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const dialogRef = useRef<HTMLButtonElement>(null);
+
   return (
     /* 最外层div负责处理页面缩放 */
     <div
@@ -58,12 +61,30 @@ function App() {
         marginTop: "-450px", // 向上移动高度的一半
       }}
     >
+      <audio ref={audioRef} src="/bgm.mp3" loop />
+
       {/* 2D元素 */}
       <LargeContainer className="items-start justify-start">
-        <img src="/assistant.png" className="absolute inset-0 -z-1 ml-60" />
+        <img
+          src="/assistant.png"
+          className="pointer-events-auto absolute -z-2 ml-60"
+          onClick={() => {
+            if (dialogRef.current !== null)
+              dialogRef.current.style.opacity = "1";
+          }}
+        />
 
-        <FlexContainer className="pointer-events-auto z-2 mt-8 ml-8 gap-8">
-          <BaseButton className="w-16 shadow-2xl">
+        <FlexContainer className="z-2 mt-8 ml-8 gap-8">
+          <BaseButton
+            className="w-16 shadow-2xl"
+            onClick={() => {
+              if (audioRef.current?.paused) {
+                audioRef.current?.play();
+              } else {
+                audioRef.current?.pause();
+              }
+            }}
+          >
             <img src="/icon_svg/settings.svg" />
           </BaseButton>
           <BaseButton className="w-16 shadow-2xl">
@@ -93,8 +114,14 @@ function App() {
           className="mb-15 ml-12"
         >
           <BaseButton
+            ref={dialogRef}
             className="mt-140 ml-2 flex h-32 w-140 flex-col overflow-visible bg-[#00000088] transition-opacity duration-500"
-            onClick={(e) => (e.currentTarget.style.opacity = "0")}
+            onClick={() => {
+              if (dialogRef.current !== null) {
+                dialogRef.current.style.opacity =
+                  dialogRef.current.style.opacity == "0" ? "1" : "0";
+              }
+            }}
           >
             <div className="absolute z-1 -mt-2 -ml-2 w-40 bg-[#777777] pl-1 text-[#333333] shadow-[0.2rem_0.15rem_#00000099]">
               VOICE

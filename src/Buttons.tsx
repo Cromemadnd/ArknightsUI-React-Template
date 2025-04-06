@@ -1,21 +1,33 @@
 import { Button } from "@headlessui/react";
 
+const sharedAudio = new Audio("/click.wav");
+
 export function BaseButton({
   children,
   className = "",
   onClick,
   style = {},
+  ref,
 }: {
   children: React.ReactNode;
   className?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   style?: React.CSSProperties;
+  ref?: React.Ref<HTMLButtonElement>;
 }) {
   return (
     <Button
-      className={`flex justify-start overflow-hidden text-left backdrop-blur-xs after:absolute after:inset-0 after:transition-colors active:after:bg-black/20 ${className}`}
+      className={`${className} pointer-events-auto flex justify-start overflow-hidden text-left backdrop-blur-xs after:absolute after:inset-0 after:transition-colors active:after:bg-black/20`}
       style={style}
-      onClick={onClick}
+      ref={ref}
+      onClick={(event) => {
+        sharedAudio.currentTime = 0;
+        sharedAudio.play();
+
+        if (onClick !== undefined) {
+          onClick(event);
+        }
+      }}
     >
       {children}
     </Button>

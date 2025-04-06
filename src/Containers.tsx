@@ -54,7 +54,7 @@ export function ThreeDContainer({
         transformOrigin: "center",
         transition: "transform 0.2s ease-out",
       }}
-      className={`pointer-events-auto flex flex-col gap-6 ${className}`}
+      className={`flex flex-col gap-6 ${className}`}
     >
       {children}
     </div>
