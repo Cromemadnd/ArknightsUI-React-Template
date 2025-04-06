@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    font-family: "SourceHanSansCN-VF";
+  }
+
+  body {
+    @apply bg-black text-white;
+    background-image: url("/bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+}
+
+@font-face {
+  font-family: "AgeFonts001";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/SamigirianSerif-Regular.ttf");
+}
+
+@font-face {
+  font-family: "SourceHanSansCN-VF";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/SourceHanSansCN-VF.ttf");
+}
+
+@font-face {
+  font-family: "FZZYS";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/方正准雅宋_GBK.ttf");
+}
