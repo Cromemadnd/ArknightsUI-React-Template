@@ -1,5 +1,7 @@
 # Arknights UI React Template
 
+![预览图](./preview.png)
+
 ## 项目简介
 
 这是一个基于《明日方舟》游戏UI风格的网页模板，使用React 19 + Tailwind CSS + Headless UI开发，旨在方便相关二次创作。
@@ -53,4 +55,5 @@ MIT License
 [图标\_源石.png](https://prts.wiki/w/文件:图标_源石.png)
 
 ### 附带的助理立绘
+
 本人使用[Tensor.Art](https://tusiart.com/)生成，不持有版权。
