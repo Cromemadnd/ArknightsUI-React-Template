@@ -1,5 +1,7 @@
 # Arknights UI React Template
 
+### 本项目仅作学习与练习用途，与《明日方舟》游戏本体无关联，版权归鹰角网络所有。若有侵权，请联系本人删除。
+
 ![预览图](./preview.png)
 
 ## 项目简介
@@ -63,7 +65,7 @@ MIT License
 
 ### 龙门币、合成玉、源石图标，背景图片与BGM
 
-均来自[PRTS](https://prts.wiki)。
+均来自[PRTS.wiki](https://prts.wiki)。
 
 ### 按键点击音效
 
