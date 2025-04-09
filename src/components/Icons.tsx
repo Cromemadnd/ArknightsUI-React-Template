@@ -85,7 +85,7 @@ export function BatteryIcon({ batteryLevel = 0 }: { batteryLevel?: number }) {
   );
 }
 
-export function LevelIcon() {
+export function LevelIcon({ level = 120 }) {
   return (
     <svg viewBox="0 0 208 208" className="mt-48 ml-12 h-36 w-36">
       <circle
@@ -95,20 +95,77 @@ export function LevelIcon() {
         fill="none"
         stroke="#ffffff33"
         strokeWidth={8}
-      ></circle>
+      />
       <text
         x="104"
         y="120"
         textAnchor="middle"
         fill="#ffffff"
         fontSize="80"
-        fontWeight="bold"
       >
-        120
+        {level}
       </text>
-      <text x="104" y="168" textAnchor="middle" fill="#ffffff" fontSize="32">
+      <text x="104" y="176" textAnchor="middle" fill="#ffffff" fontSize="32">
         LV
       </text>
+    </svg>
+  );
+}
+
+export function HideIcon() {
+  return (
+    <svg viewBox="0 0 208 208">
+      <circle
+        cx="104"
+        cy="104"
+        r="96"
+        fill="#303030"
+        stroke="#999999"
+        strokeWidth={8}
+      />
+      <path
+        d="M 48,108 Q 104,48 160,108
+           M 48,100 Q 104,160 160,100
+           M 140,64 L 68,144
+        "
+        stroke="#ffffff"
+        fill="none"
+        strokeWidth={10}
+      />
+      <path d="M 92,120 Q 128,128 116,80 S" fill="#ffffff" stroke="none" />
+    </svg>
+  );
+}
+
+export function ChangeIcon() {
+  return (
+    <svg viewBox="0 0 208 208">
+      <circle
+        cx="104"
+        cy="104"
+        r="96"
+        fill="#303030"
+        stroke="#999999"
+        strokeWidth={8}
+      />
+      <circle
+        cx="104"
+        cy="104"
+        r="48"
+        fill="none"
+        stroke="#ffffff"
+        strokeWidth={12}
+      />
+      <line
+        x1="160"
+        y1="48"
+        x2="48"
+        y2="160"
+        stroke="#303030"
+        strokeWidth={32}
+      />
+      <polygon points="28,104 56,132 84,104" fill="#ffffff" stroke="none" />
+      <polygon points="180,104 152,76 124,104" fill="#ffffff" stroke="none" />
     </svg>
   );
 }

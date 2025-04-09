@@ -1,0 +1,36 @@
+@theme {
+  --bg-image: url("/bg.png");
+  --font-primary: "FZZYS";
+  --font-secondary: "SamigirianSerif";
+
+  /* 按钮背景颜色 */
+  --color-button-dark: #333344aa;
+  --color-button-light: #4a40bfaa;
+  --color-border-dark: #6052ffff;
+  --color-button-friends: #111115bb;
+  --color-button-archive: #222228bb;
+  --color-button-depot: #222228bb;
+  --color-sanity-light: #88888877;
+  --color-sanity-dark: #323232ff;
+  --color-current-wrapper: #222222ff;
+  --color-voice-bg: #999999cc;
+
+  /* 字体颜色 */
+  --color-subtitle-dark: hsl(245, 100%, 60%);
+  --color-subtitle-mid: hsl(245, 100%, 70%);
+  --color-subtitle-light: hsl(245, 100%, 80%);
+  --color-title-very-dark: #777777ff;
+  --color-title-dark: #b9b9b9ff;
+  --color-title-light: #ddddddff;
+  --color-voice-text: #333333ff;
+}
+
+@font-face {
+  font-family: "SamigirianSerif";
+  src: url("/fonts/SamigirianSerif-Regular.ttf");
+}
+
+@font-face {
+  font-family: "FZZYS";
+  src: url("/fonts/方正准雅宋_GBK.ttf");
+}

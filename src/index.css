@@ -1,51 +1,51 @@
 @import "tailwindcss";
+@import "./themes/ocean.css";
 
-@layer base {
-  :root {
-    font-family: "SourceHanSansCN-VF";
-  }
+@theme {
+  --font-news: "EightBitOperator";
+  --font-datetime: "Novecento";
 
-  body {
-    @apply bg-black text-white;
-    background-image: url("/bg.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-  }
+  --color-level-bg: #323232ff;
+  --color-dialog-bg: #00000077;
+  --color-news-bg: #bb0000ff;
+  --color-items-bg: #222222aa;
+  --color-placeholder-bg: #000000aa;
+
+  --text-huge: 6rem;
+  --text-xx-large: 3.5rem;
+  --text-x-large: 2.5rem;
+  --text-large: 2rem;
+  --text-normal: 1.5rem;
+  --text-small: 1.2rem;
+  --text-x-small: 1rem;
+
+  --shadow-normal: 0.2rem 0.15rem #00000099;
+  --text-shadow-normal: 0.2rem 0.15rem #00000099;
+  --text-shadow-large: 0.3rem 0.2rem #00000099;
 }
 
-@font-face {
-  font-family: "SamigirianSerif";
-  font-style: normal;
-  font-weight: 400;
-  src: url("/fonts/SamigirianSerif-Regular.ttf");
+body {
+  @apply text-white;
+  font-family: "SourceHanSansCN-VF";
+
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 @font-face {
   font-family: "SourceHanSansCN-VF";
-  font-style: normal;
-  font-weight: 400;
   src: url("/fonts/SourceHanSansCN-VF.ttf");
 }
 
 @font-face {
-  font-family: "FZZYS";
-  font-style: normal;
-  font-weight: 400;
-  src: url("/fonts/方正准雅宋_GBK.ttf");
-}
-
-@font-face {
   font-family: "Novecento";
-  font-style: normal;
-  font-weight: 400;
   src: url("/fonts/Novecento-Wide-Normal-2.otf");
 }
 
 @font-face {
   font-family: "EightBitOperator";
-  font-style: normal;
-  font-weight: 400;
   src: url("/fonts/8bitOperatorPlus8-Regular.ttf");
 }

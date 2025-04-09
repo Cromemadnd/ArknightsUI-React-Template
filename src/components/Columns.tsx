@@ -1,20 +1,24 @@
 import { BatteryIcon, RecuritIcon } from "./Icons.tsx";
-import { RecruitButton, BaseButton } from "./Buttons.tsx";
+import { RecruitButton, BaseButton, clickSound } from "./Buttons.tsx";
 import { useState, useEffect } from "react";
+import { FlexContainer } from "./Containers.tsx";
 
 export function RecuritCol() {
   return (
-    <div className="h-35 w-100 bg-[#4a40bfaa] backdrop-blur-xs">
-      <div className="flex h-32 flex-col p-2">
-        <div className="flex items-center gap-3 bg-[#333333] py-1 pl-3 text-[1.5rem] text-[#aaaaaa]">
+    <div className="bg-button-light h-35 w-100 backdrop-blur-xs">
+      <FlexContainer className="h-32 flex-col p-2" gap={0}>
+        <FlexContainer
+          className="bg-sanity-dark text-title-very-dark items-center py-1 pl-3 text-normal"
+          gap={3}
+        >
           <RecuritIcon />
           招募
-        </div>
+        </FlexContainer>
         <div className="flex">
           <RecruitButton title="recurit" subtitle="公开招募" />
           <RecruitButton title="headhunt" subtitle="干员寻访" />
         </div>
-      </div>
+      </FlexContainer>
     </div>
   );
 }
@@ -51,8 +55,11 @@ export function DatetimeCol() {
   }, []);
 
   return (
-    <div className="flex h-6 w-200 items-center gap-2 font-[Novecento] text-[1.5rem] text-white text-shadow-[0.2rem_0.15rem_#00000099]">
-      <hr className="w-25 border-t-4 border-white" />
+    <FlexContainer
+      className="font-datetime text-shadow-normal h-6 w-185 items-center text-normal"
+      gap={2}
+    >
+      <hr className="w-20 border-t-4" />
       {batteryLevel !== null && <BatteryIcon batteryLevel={batteryLevel} />}
       {currentTime.toLocaleString("zh-CN", {
         year: "numeric",
@@ -61,18 +68,43 @@ export function DatetimeCol() {
         hour: "2-digit",
         minute: "2-digit",
       })}
-      <hr className="w-100 border-t-4 border-white" />
-    </div>
+      <hr className="w-90 border-t-4" />
+    </FlexContainer>
+  );
+}
+
+export function ItemsCol() {
+  return (
+    <FlexContainer
+      gap={2}
+      className="text-shadow-normal bg-items-bg text-x-large -mt-2 h-12 w-190 -translate-x-8 items-center"
+    >
+      <img src="./icon_png/icon_money.png" className="mt-1 h-15 w-15" />
+      1000000
+      <img src="./icon_png/icon_jade.png" className="mt-1 h-15 w-15" />
+      10000
+      <BaseButton blur={false}>
+        <img src="./icon_svg/plus.svg" className="mt-1 h-10 w-10" />
+      </BaseButton>
+      <img src="./icon_png/icon_originium.png" className="mt-1 h-15 w-15" />
+      10000
+      <BaseButton blur={false}>
+        <img src="./icon_svg/plus.svg" className="mt-1 h-10 w-10" />
+      </BaseButton>
+    </FlexContainer>
   );
 }
 
 export function NewsCol() {
   // 此处可以对接网站后端
-  const banners = ["/banners/1.png", "/banners/2.png", "/banners/3.png"];
+  const banners = ["./banners/1.png", "./banners/2.png", "./banners/3.png"];
 
   const [index, setIndex] = useState(0);
   const [dragStartX, setDragStartX] = useState(0);
   const [dragEndX, setDragEndX] = useState(0);
+
+  const width = 72;
+  const gap = 6;
 
   // 定义空图片，以防止拖拽时显示预览
   const img = new Image();
@@ -87,6 +119,7 @@ export function NewsCol() {
   }, [index, banners.length, dragStartX]);
 
   function handleDragStart(e: React.DragEvent) {
+    clickSound.play();
     e.dataTransfer.setDragImage(img, 0, 0);
     setDragStartX(e.clientX);
     setDragEndX(e.clientX);
@@ -99,7 +132,10 @@ export function NewsCol() {
   function handleDragEnd(e: React.DragEvent) {
     setIndex(
       Math.min(
-        Math.max(index - Math.round((e.clientX - dragStartX) / 240), 0),
+        Math.max(
+          index - Math.round((e.clientX - dragStartX) / ((width + gap) * 3)),
+          0,
+        ),
         banners.length - 1,
       ),
     );
@@ -109,27 +145,47 @@ export function NewsCol() {
 
   return (
     <div
-      className="h-34 w-84 overflow-visible"
+      className={`ml-2 h-34 w-${width} overflow-visible`}
       draggable={true}
       onDragStart={handleDragStart}
       onDrag={handleDragMove}
       onDragEnd={handleDragEnd}
     >
-      <div className="h-34 w-84 overflow-hidden">
-        <div className="absolute z-1 -mt-2 -ml-2 w-33 bg-[#a40000] pl-1 font-[EightBitOperator] font-bold shadow-[0.2rem_0.15rem_#00000099]">
+      <div
+        style={{
+          height: "136px",
+          width: `${width * 4}px`,
+          overflow: "hidden",
+        }}
+      >
+        <div className="bg-news-bg font-news shadow-normal absolute z-1 -mt-2 -ml-2 w-33 pl-1 font-bold">
           BREAKING NEWS
         </div>
 
         <BaseButton
           style={{
-            // 此处注意translateX以向左为正
-            transform: `translateX(${Math.max(Math.min(1.2 * (dragEndX - dragStartX) - index * 360, 60), -banners.length * 360 + 300)}px)`,
+            transform: `translateX(${Math.max(
+              Math.min(
+                dragEndX - dragStartX - index * (width + gap) * 4,
+                (width + gap) * 4,
+              ),
+              -banners.length * (width + gap) * 4,
+            )}px)`,
+            gap: `${gap * 4}px`,
+            transition: "transform 250ms ease-out",
           }}
-          className="gap-6 transition-transform duration-250 ease-out"
           onClick={() => console.log(index)}
         >
           {banners.map((banner, i) => (
-            <img key={i} src={banner} className="h-34 max-w-84 min-w-84" />
+            <img
+              key={i}
+              src={banner}
+              style={{
+                height: "136px",
+                maxWidth: `${width * 4}px`,
+                minWidth: `${width * 4}px`,
+              }}
+            />
           ))}
         </BaseButton>
       </div>
@@ -138,8 +194,8 @@ export function NewsCol() {
         <hr
           style={{
             // 设置线长:间隔为10:1
-            width: `${21 / (1.1 * banners.length - 0.1)}rem`,
-            marginLeft: `${(i * 1.1 * 21) / (1.1 * banners.length - 0.1)}rem`,
+            width: `${18 / (1.1 * banners.length - 0.1)}rem`,
+            marginLeft: `${(i * 1.1 * 18) / (1.1 * banners.length - 0.1)}rem`,
             borderColor: i == index ? "#ff9900" : "#ffffff",
           }}
           className={`absolute mt-2 border-t-6`}

@@ -2,18 +2,27 @@ import { useState, useEffect, useRef } from "react";
 import {
   ArchiveButton,
   BaseButton,
+  DepotButton,
   FriendsButton,
   SmallButton,
   StoreButton,
   TerminalButton,
-} from "./Buttons.tsx";
-import { DatetimeCol, NewsCol, RecuritCol } from "./Columns.tsx";
+} from "./components/Buttons.tsx";
+import {
+  DatetimeCol,
+  ItemsCol,
+  NewsCol,
+  RecuritCol,
+} from "./components/Columns.tsx";
 import {
   FlexContainer,
   LargeContainer,
   ThreeDContainer,
-} from "./Containers.tsx";
-import { LevelIcon } from "./Icons.tsx";
+} from "./components/Containers.tsx";
+import { ChangeIcon, HideIcon, LevelIcon } from "./components/Icons.tsx";
+
+const bgm = new Audio("./bgm.mp3");
+bgm.loop = true;
 
 function App() {
   // 处理缩放
@@ -22,6 +31,8 @@ function App() {
   );
   // 处理3D变换跟随鼠标效果
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  // 处理主题切换
+  const [theme] = useState(localStorage.getItem("theme") || "ocean");
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,16 +46,32 @@ function App() {
       });
     };
 
+    // 此处设备的重力感应好像没有生效
+    const handleDeviceOrientation = (e: DeviceOrientationEvent) => {
+      if (e.beta !== null && e.gamma !== null) {
+        setMousePosition({
+          x: Math.min(Math.max(e.gamma / 45, -0.5), 0.5),
+          y: Math.min(Math.max(e.beta / 45, -0.5), 0.5),
+        });
+      }
+    };
+
+    localStorage.setItem("theme", theme);
+
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("deviceorientation", handleDeviceOrientation);
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("deviceorientation", handleDeviceOrientation);
     };
-  }, []);
+  }, [theme]);
 
-  const audioRef = useRef<HTMLAudioElement>(null);
   const dialogRef = useRef<HTMLButtonElement>(null);
+  const left2DRef = useRef<HTMLDivElement>(null);
+  const left3DRef = useRef<HTMLDivElement>(null);
+  const right3DRef = useRef<HTMLDivElement>(null);
 
   return (
     /* 最外层div负责处理页面缩放 */
@@ -59,82 +86,123 @@ function App() {
         top: "50%", // 垂直居中
         marginLeft: "-800px", // 向左移动宽度的一半
         marginTop: "-450px", // 向上移动高度的一半
+        overflow: "hidden", // 添加溢出隐藏
       }}
     >
-      <audio ref={audioRef} src="/bgm.mp3" loop />
-
-      {/* 2D元素 */}
-      <LargeContainer className="items-start justify-start">
+      <BaseButton className="absolute -z-2 ml-60 after:hidden" blur={false}>
         <img
-          src="/assistant.png"
-          className="pointer-events-auto absolute -z-2 ml-60"
+          src="./assistant.png"
           onClick={() => {
-            if (dialogRef.current !== null)
-              dialogRef.current.style.opacity = "1";
+            if (left2DRef.current?.getAttribute("hidden")) {
+              left2DRef.current?.removeAttribute("hidden");
+              left3DRef.current?.removeAttribute("hidden");
+              right3DRef.current?.removeAttribute("hidden");
+              /* 强制触发重绘 */
+              void left2DRef.current?.offsetWidth;
+              void left3DRef.current?.offsetWidth;
+              void right3DRef.current?.offsetWidth;
+              left2DRef.current?.style.setProperty("opacity", "1");
+              left3DRef.current?.style.setProperty("opacity", "1");
+              right3DRef.current?.style.setProperty("opacity", "1");
+            } else {
+              dialogRef.current?.style.setProperty(
+                "opacity",
+                dialogRef.current.style.opacity == "0" ? "1" : "0",
+              );
+            }
           }}
         />
+      </BaseButton>
 
+      {/* 2D元素 */}
+      <LargeContainer className="items-start justify-start" ref={left2DRef}>
         <FlexContainer className="z-2 mt-8 ml-8 gap-8">
           <BaseButton
             className="w-16 shadow-2xl"
+            blur={false}
             onClick={() => {
-              if (audioRef.current?.paused) {
-                audioRef.current?.play();
+              if (bgm.paused) {
+                bgm.play();
               } else {
-                audioRef.current?.pause();
+                bgm.pause();
               }
             }}
           >
-            <img src="/icon_svg/settings.svg" />
+            <img src="./icon_svg/settings.svg" />
           </BaseButton>
-          <BaseButton className="w-16 shadow-2xl">
-            <img src="/icon_svg/notice.svg" />
+          <BaseButton className="w-16 shadow-2xl" blur={false}>
+            <img src="./icon_svg/notice.svg" />
           </BaseButton>
-          <BaseButton className="w-16 shadow-2xl">
-            <img src="/icon_svg/mail.svg" />
+          <BaseButton className="w-16 shadow-2xl" blur={false}>
+            <img src="./icon_svg/mail.svg" />
           </BaseButton>
-          <BaseButton className="w-16 shadow-2xl">
-            <img src="/icon_svg/calendar.svg" />
+          <BaseButton className="w-16 shadow-2xl" blur={false}>
+            <img src="./icon_svg/calendar.svg" />
           </BaseButton>
         </FlexContainer>
 
-        <LevelIcon />
+        <LevelIcon level={120} />
+        <div className="bg-level-bg -z-1 -mt-12 h-12 w-48" />
 
-        <div className="bg-gray-900"></div>
-
-        <div className="ml-12 text-center text-[2rem]">Cromemadnd</div>
-        <div className="ml-12 text-center text-[1rem]">ID: 000000000</div>
+        <div className="text-large ml-12 text-center">Cromemadnd</div>
+        <div className="text-x-small ml-12 text-center">ID: 000000000</div>
       </LargeContainer>
 
       {/* 左侧3D元素 */}
-      <LargeContainer className="items-start justify-end">
+      <LargeContainer className="items-start justify-end" ref={left3DRef}>
         <ThreeDContainer
-          rotx={mousePosition.y}
-          roty={8 + mousePosition.x}
+          rotx={mousePosition.y / 1.8}
+          roty={6 + mousePosition.x * 2}
+          tranx={-mousePosition.x * 2}
           className="mb-15 ml-12"
         >
+          <FlexContainer className="absolute mt-112 ml-68" gap={2}>
+            <BaseButton
+              className="w-12"
+              blur={false}
+              onClick={() => {
+                left2DRef.current?.style.setProperty("opacity", "0");
+                left3DRef.current?.style.setProperty("opacity", "0");
+                right3DRef.current?.style.setProperty("opacity", "0");
+                setTimeout(() => {
+                  left2DRef.current?.setAttribute("hidden", "true");
+                  left3DRef.current?.setAttribute("hidden", "true");
+                  right3DRef.current?.setAttribute("hidden", "true");
+                }, 500);
+              }}
+            >
+              <HideIcon />
+            </BaseButton>
+
+            <BaseButton className="w-12" blur={false}>
+              <ChangeIcon />
+            </BaseButton>
+
+            <div className="-z-1 mt-6 -ml-2 h-0.5 w-36 bg-gradient-to-r from-white to-transparent"></div>
+          </FlexContainer>
+
           <BaseButton
             ref={dialogRef}
-            className="mt-140 ml-2 flex h-32 w-140 flex-col overflow-visible bg-[#00000088] transition-opacity duration-500"
+            className="bg-dialog-bg mt-140 ml-2 h-32 w-122 flex-col overflow-visible transition-opacity duration-500"
             onClick={() => {
-              if (dialogRef.current !== null) {
-                dialogRef.current.style.opacity =
-                  dialogRef.current.style.opacity == "0" ? "1" : "0";
-              }
+              dialogRef.current?.style.setProperty(
+                "opacity",
+                dialogRef.current.style.opacity == "0" ? "1" : "0",
+              );
             }}
           >
-            <div className="absolute z-1 -mt-2 -ml-2 w-40 bg-[#777777] pl-1 text-[#333333] shadow-[0.2rem_0.15rem_#00000099]">
+            <div className="bg-voice-bg text-voice-text shadow-normal absolute z-1 -mt-2 -ml-2 w-40 pl-1">
               VOICE
             </div>
-            <div className="absolute flex h-32 items-center pr-6 pl-6 text-[1.25rem] text-[#ffffff]">
+            <FlexContainer className="text-small absolute h-32 items-center pr-6 pl-6">
               喵喵喵喵喵？喵喵，喵喵喵！喵喵？
-            </div>
-            <div className="mt-22 mr-4 text-right text-[1.25rem]">▼</div>
+            </FlexContainer>
+            <div className="text-small mt-22 mr-4 text-right">▼</div>
           </BaseButton>
           <FlexContainer>
             <NewsCol />
 
-            <FlexContainer className="flex-col" gap={3}>
+            <FlexContainer className="-ml-3 flex-col" gap={2}>
               <FriendsButton />
               <ArchiveButton />
             </FlexContainer>
@@ -143,36 +211,24 @@ function App() {
       </LargeContainer>
 
       {/* 右侧3D元素 */}
-      <LargeContainer className="items-end justify-center overflow-hidden">
+      <LargeContainer className="items-end justify-center" ref={right3DRef}>
         <ThreeDContainer
-          rotx={mousePosition.y}
-          roty={mousePosition.x - 8}
+          rotx={mousePosition.y / 1.8}
+          roty={mousePosition.x * 2 - 6}
+          tranx={-mousePosition.x * 2}
           className="items-end"
         >
           <DatetimeCol />
-          <FlexContainer
-            gap={2}
-            className="-mt-2 h-12 w-200 -translate-x-8 items-center bg-[#22222277] text-[2.5rem] text-shadow-[0.2rem_0.15rem_#00000099]"
-          >
-            <img src="/icon_png/icon_money.png" className="mt-1 h-15 w-15" />
-            1000000
-            <img src="/icon_png/icon_jade.png" className="mt-1 h-15 w-15" />
-            1000000
-            <img
-              src="/icon_png/icon_originium.png"
-              className="mt-1 h-15 w-15"
-            />
-            1000000
-          </FlexContainer>
+          <ItemsCol />
 
           <TerminalButton />
           <FlexContainer className="-translate-z-10">
             <SmallButton subtitle="squads" title="编队" />
             <SmallButton subtitle="operator" title="干员" />
-            <div className="w-16 bg-[#000000cc]"></div>
+            <div className="bg-placeholder-bg -mr-16 w-32"></div>
           </FlexContainer>
 
-          <FlexContainer gap={0}>
+          <FlexContainer gap={0} className="">
             <StoreButton />
             <RecuritCol />
             <div className="w-14" />
@@ -181,15 +237,7 @@ function App() {
           <FlexContainer className="translate-x-5 translate-y-10 -translate-z-20">
             <SmallButton subtitle="mission" title="任务" />
             <SmallButton subtitle="base" title="基建" />
-            <BaseButton className="-ml-6 flex w-24 flex-col bg-[#222222dd] pt-6 pl-1">
-              <div className="font-['FZZYS'] text-[2.5rem] text-[#b9b9b9ff]">
-                仓库
-              </div>
-              <div className="-mt-3 font-['SamigirianSerif'] text-[2rem] text-[#777777]">
-                depot
-              </div>
-            </BaseButton>
-            <div />
+            <DepotButton />
           </FlexContainer>
         </ThreeDContainer>
       </LargeContainer>
