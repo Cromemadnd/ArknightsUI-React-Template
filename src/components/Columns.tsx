@@ -196,7 +196,7 @@ export function NewsCol() {
             // 设置线长:间隔为10:1
             width: `${18 / (1.1 * banners.length - 0.1)}rem`,
             marginLeft: `${(i * 1.1 * 18) / (1.1 * banners.length - 0.1)}rem`,
-            borderColor: i == index ? "#ff9900" : "#ffffff",
+            borderColor: i == index ? "var(--color-news-scrollbar-bg)" : undefined,
           }}
           className={`absolute mt-2 border-t-6`}
         />

@@ -46,7 +46,7 @@ function App() {
       });
     };
 
-    // 此处设备的重力感应好像没有生效
+    // 此处重力感应好像没有生效
     const handleDeviceOrientation = (e: DeviceOrientationEvent) => {
       if (e.beta !== null && e.gamma !== null) {
         setMousePosition({
