@@ -6,7 +6,7 @@
 
 ## 项目简介
 
-这是一个基于《明日方舟》游戏UI风格的网页模板，使用React 19 + Tailwind CSS + Headless UI开发，旨在方便相关二次创作。
+这是一个基于《明日方舟》游戏UI风格的网页模板，使用React 19 (Vite + TS) + Tailwind CSS + Headless UI开发，旨在方便相关二次创作。
 
 点击隐藏按钮可以隐藏UI，隐藏时点击助理立绘可以显示UI。点击左上角设置按钮播放/暂停BGM。
 
@@ -41,7 +41,7 @@ npm run dev
 
 ## 许可证
 
-MIT License
+[MIT License](./LICENSE)
 
 ## 使用的素材
 
